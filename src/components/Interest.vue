@@ -19,11 +19,11 @@
           <v-col>
             <v-slider v-model="amount" max="300000" min="10000" step="1000">
               <template v-slot:prepend>
-                <v-icon :color="color" @click="decAmount">mdi-minus</v-icon>
+                <v-icon @click="decAmount">mdi-minus</v-icon>
               </template>
 
               <template v-slot:append>
-                <v-icon :color="color" @click="incAmount">mdi-plus</v-icon>
+                <v-icon @click="incAmount">mdi-plus</v-icon>
               </template>
             </v-slider>
           </v-col>
@@ -43,7 +43,7 @@
 
         <v-row>
           <v-col>
-            <v-slider v-model="interest" min="1" max="10">
+            <v-slider v-model="interest" min="1" max="10" :color="color" step="0.5" ticks="always">
               <template v-slot:prepend>
                 <v-icon :color="color" @click="decrement">mdi-minus</v-icon>
               </template>
@@ -55,7 +55,7 @@
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row style="display: none;">
           <v-col>
             <v-chip>
               Ränta per år:
@@ -82,6 +82,14 @@ export default {
   }),
 
   computed: {
+    color() {
+      if (this.interest < 3) return "teal darken-4";
+      if (this.interest < 5) return "teal lighten-2";
+      if (this.interest < 7) return "orange lighten-2";
+      if (this.interest < 9) return "orange";
+      if (this.interest < 11) return "deep-orange darken-1";
+      return "red";
+    },
     interestComment() {
       if (this.interest < 3) return "Husränta (låg)";
       if (this.interest < 5) return "Billån (normal)";
@@ -91,10 +99,14 @@ export default {
       return "red";
     },
     amountYear() {
-      return (this.amount * this.interest) / 100;
+      var ay = (this.amount * this.interest) / 100;
+      this.$emit("amountPerYear", ay);
+      return ay;
     },
     amountMonth() {
-      return Math.round(this.amountYear / 12);
+      var am = Math.round(this.amountYear / 12);
+      this.$emit("amountPerMonth", am);
+      return am;
     }
   },
 
@@ -106,10 +118,10 @@ export default {
       this.amount -= 1000;
     },
     decrement() {
-      this.interest--;
+      this.interest -= 0.5;
     },
     increment() {
-      this.interest++;
+      this.interest += 0.5;
     }
   }
 };
