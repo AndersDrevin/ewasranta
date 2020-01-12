@@ -10,7 +10,7 @@
         </v-row>
         <v-row>
           <v-col class="text-left">
-            <span class="display-3 font-weight-light" v-text="amount"></span>
+            <span class="display-3 font-weight-light" v-text="amt"></span>
             <span class="subheading font-weight-light mr-1">kr</span>
           </v-col>
         </v-row>
@@ -82,6 +82,9 @@ export default {
   }),
 
   computed: {
+    amt() {
+      return Number(this.amount).toLocaleString();
+    },
     color() {
       if (this.interest < 3) return "teal darken-4";
       if (this.interest < 5) return "teal lighten-2";

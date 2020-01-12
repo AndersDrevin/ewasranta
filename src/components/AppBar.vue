@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-2">
     <v-app-bar color="deep-purple accent-4" dark fixed>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
 
@@ -21,7 +21,7 @@
 
           <v-btn color="green darken-1" text @click="dialog = false">Åh, Tack!</v-btn>
 
-          <v-btn color="green darken-1" text @click="dialog = false">Jag vet</v-btn>
+          <v-btn color="green darken-3" text @click="dialog = false">Jag vet</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
